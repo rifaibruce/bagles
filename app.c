@@ -1,3 +1,4 @@
+#include <setjmp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -28,4 +29,32 @@ int generate_guess() {
   return random_num;
 }
 
-int main(int argc, char *argv[]) { printf("%d\n", generate_guess()); }
+int get_guess_from_user() {
+  int buffer_size = 32;
+  char *read_line = (char *)malloc(buffer_size * sizeof(int));
+  printf("Enter your guess: ");
+
+  if (fgets(read_line, buffer_size, stdin) != NULL) {
+    int user_guess;
+    int bytes_converted = sscanf(read_line, "%d", &user_guess);
+    if (bytes_converted != EOF && bytes_converted >= 1) {
+      free(read_line);
+      return user_guess;
+    }
+  }
+
+  free(read_line);
+  return -1;
+}
+
+int main(int argc, char *argv[]) {
+  printf("%d\n", generate_guess());
+  int user_guess = get_guess_from_user();
+
+  if (user_guess == -1) {
+    perror("Failed to get user guess");
+    return -1;
+  }
+
+  printf("%d\n", user_guess);
+}
