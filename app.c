@@ -61,12 +61,13 @@ char *compare_guess(int user_guess, int computer_guess) {
   int user_guess_arr[3] = {0};
 
   char *answer = (char *)malloc((strlen("Fermi ") * 3) + 1);
-  memset(answer, 0, (strlen("Fermi ") * 3) + 1);
 
   if (answer == NULL) {
     perror("Malloc fail in compare_guess");
     return NULL;
   }
+
+  memset(answer, 0, (strlen("Fermi ") * 3) + 1);
 
   for (int i = 2; i >= 0; i--) {
     int computer_guess_digit = computer_guess % 10;
