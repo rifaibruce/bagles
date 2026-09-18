@@ -32,7 +32,7 @@ int generate_guess() {
 
 int get_guess_from_user() {
   int buffer_size = 32;
-  char *read_line = (char *)malloc(buffer_size * sizeof(int));
+  char *read_line = (char *)malloc(buffer_size);
   printf("Enter your guess: ");
 
   if (fgets(read_line, buffer_size, stdin) != NULL) {
@@ -79,8 +79,7 @@ char *compare_guess(int user_guess, int computer_guess) {
     user_guess /= 10;
     computer_guess /= 10;
   }
-  // Duct tape solution: Updating the index to skip the rest of the loop once a
-  // decision is made
+
   int checked_arr[3] = {-1, -1, -1};
 
   for (int i = 0; i < 3; i++) {
@@ -95,11 +94,11 @@ char *compare_guess(int user_guess, int computer_guess) {
           break;
         }
       }
-      continue;
     }
+  }
 
+  for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
-
       if (checked_arr[0] == j || checked_arr[1] == j || checked_arr[2] == j)
         continue;
 
@@ -131,7 +130,7 @@ int main(void) {
          "of the following phrases:\n");
   printf("\t1. Pico means one digit is correct but in the wrong position\n\t2. "
          "Fermi means one digit is correct is correct and in the right "
-         "position\n\t3. Bagles means no digit is correct in the guess");
+         "position\n\t3. Bagles means no digit is correct in the guess\n");
   printf("To quit enter -1 as a guess\n");
 
   int computer_guess = generate_guess();
