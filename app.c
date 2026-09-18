@@ -73,13 +73,14 @@ char *compare_guess(int user_guess, int computer_guess) {
   // Duct tape solution: Updating the index to skip the rest of the loop once a
   // decision is made
   for (int i = 0; i < 3; i++) {
+    if (computer_guess_arr[i] == user_guess_arr[i]) {
+      strcat(answer, "Fermi ");
+      continue;
+    }
+
     for (int j = 0; j < 3; j++) {
       if (user_guess_arr[j] == computer_guess_arr[i]) {
-        if (i == j) {
-          strcat(answer, "Fermi ");
-        } else {
-          strcat(answer, "Pico ");
-        }
+        strcat(answer, "Pico ");
         j = 3;
       }
     }
