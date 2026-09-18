@@ -102,7 +102,7 @@ char *compare_guess(int user_guess, int computer_guess) {
   return answer;
 }
 
-int main(int argc, char *argv[]) {
+int main(void) {
   printf("Welcome to the Bagles game!\n");
   printf("To play this game, you must try to guess the three digit number the "
          "computer is thinking of\n");
