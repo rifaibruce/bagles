@@ -94,16 +94,34 @@ char *compare_guess(int user_guess, int computer_guess) {
 }
 
 int main(int argc, char *argv[]) {
+  printf("Welcome to the Bagles game!\n");
+  printf("To play this game, you must try to guess the three digit number the "
+         "computer is thinking of\n");
+  printf("For each guess you give you will get a string containing one or more "
+         "of the following phrases:\n");
+  printf("\t1. Pico means one digit is correct but in the wrong position\n\t2. "
+         "Fermi means one digit is correct is correct and in the right "
+         "position\n\t3. Bagles means no digit is correct in the guess");
+  printf("To quit enter -1 as a guess\n");
+
   int computer_guess = generate_guess();
-  printf("%d\n", computer_guess);
-  int user_guess = get_guess_from_user();
 
-  if (user_guess == -1) {
-    perror("Failed to get user guess");
-    return -1;
-  }
+  do {
+    int user_guess = get_guess_from_user();
 
-  char *result = compare_guess(user_guess, computer_guess);
-  printf("%s\n", result);
-  free(result);
+    if (user_guess == -1) {
+      printf("Thank you for playing!!\n");
+      printf("The computer guess was %d\n", computer_guess);
+      return -1;
+    }
+
+    char *result = compare_guess(user_guess, computer_guess);
+    printf("%s\n", result);
+    if (strcmp(result, "Fermi Fermi Fermi ") == 0) {
+      printf("You won!!!\n");
+      free(result);
+      return 1;
+    }
+    free(result);
+  } while (1);
 }
