@@ -121,7 +121,7 @@ int main(void) {
     if (user_guess == -1) {
       printf("Thank you for playing!!\n");
       printf("The computer guess was %d\n", computer_guess);
-      return -1;
+      return 0;
     }
 
     char *result = compare_guess(user_guess, computer_guess);
@@ -129,7 +129,7 @@ int main(void) {
     if (strcmp(result, "Fermi Fermi Fermi ") == 0) {
       printf("You won!!!\n");
       free(result);
-      return 1;
+      return 0;
     }
     free(result);
   } while (1);
