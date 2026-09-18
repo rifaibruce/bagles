@@ -1,5 +1,7 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 /*
@@ -46,8 +48,52 @@ int get_guess_from_user() {
   return -1;
 }
 
+char *compare_guess(int user_guess, int computer_guess) {
+  int computer_guess_arr[3] = {0};
+  int user_guess_arr[3] = {0};
+
+  char *answer = (char *)malloc(strlen("Bagles") * 3);
+
+  if (answer == NULL) {
+    perror("Malloc fail in compare_guess");
+    return NULL;
+  }
+
+  for (int i = 2; i >= 0; i--) {
+    int computer_guess_digit = computer_guess % 10;
+    int user_guess_digit = user_guess % 10;
+
+    computer_guess_arr[i] = computer_guess_digit;
+    user_guess_arr[i] = user_guess_digit;
+
+    user_guess /= 10;
+    computer_guess /= 10;
+  }
+  // Duct tape solution: Updating the index to skip the rest of the loop once a
+  // decision is made
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
+      if (user_guess_arr[j] == computer_guess_arr[i]) {
+        if (i == j) {
+          strcat(answer, "Fermi ");
+        } else {
+          strcat(answer, "Pico ");
+        }
+        j = 3;
+      }
+    }
+  }
+
+  if (strlen(answer) == 0) {
+    strcat(answer, "Bagles");
+  }
+
+  return answer;
+}
+
 int main(int argc, char *argv[]) {
-  printf("%d\n", generate_guess());
+  int computer_guess = generate_guess();
+  printf("%d\n", computer_guess);
   int user_guess = get_guess_from_user();
 
   if (user_guess == -1) {
@@ -55,5 +101,7 @@ int main(int argc, char *argv[]) {
     return -1;
   }
 
-  printf("%d\n", user_guess);
+  char *result = compare_guess(user_guess, computer_guess);
+  printf("%s\n", result);
+  free(result);
 }
