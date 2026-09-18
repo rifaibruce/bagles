@@ -40,6 +40,14 @@ int get_guess_from_user() {
     int bytes_converted = sscanf(read_line, "%d", &user_guess);
     if (bytes_converted != EOF && bytes_converted >= 1) {
       free(read_line);
+
+      if (user_guess == -1)
+        return user_guess;
+      if (user_guess < 100 || user_guess > 999) {
+        printf("Wrong input, number must be 3 digits long, exiting...\n");
+        return -1;
+      }
+
       return user_guess;
     }
   }
